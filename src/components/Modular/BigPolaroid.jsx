@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React, { Component } from "react";
 import { Divider, Modal, Segment, Transition } from "semantic-ui-react";
 import { SmallCell } from "./index.ts";
-import { getTemp, getWindDir, getIconName } from "../../helpers/index.ts";
+import { getTemp, getIconName, getWindDir } from "../../helpers/index.ts";
 
 const bigPolaroid = {
   border: "2px solid gray",
@@ -46,7 +46,7 @@ const miniCell = theme => {
 };
 
 export default class BigPolaroid extends Component {
-  state = { animation: "bounce", duration: 300, visible: true };
+  state = { animation: "pulse", duration: 1000, visible: true };
 
   componentWillReceiveProps() {
     this.setState(prevState => ({ visible: !prevState.visible }));
@@ -71,7 +71,11 @@ export default class BigPolaroid extends Component {
     return (
       <Transition animation={animation} duration={duration} visible={visible}>
         <div style={bigPolaroid}>
-          <img alt="img" style={bigImage} src={getIconName(image, theme)} />
+          <img
+            alt="img"
+            style={bigImage}
+            src={`/icons/Theme${theme}/${getIconName(image)}`}
+          />
           <Divider />
           <div style={container}>
             <p style={bigHeader}>{text}</p>
@@ -127,7 +131,7 @@ export default class BigPolaroid extends Component {
                     <SmallCell
                       image="026-pressure.png"
                       title="Preassure"
-                      content={`${pressure.toString()}hPa`}
+                      content={`${pressure.toString()} hPa`}
                       style={{ color: "blue" }}
                       theme={theme}
                     />
